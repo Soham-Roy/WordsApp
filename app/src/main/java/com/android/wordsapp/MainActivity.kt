@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity(), FragmentListener {
         setContentView(R.layout.activity_main)
     }
 
+
+    // Fragment replacement using interface
     override fun onItemClicked(c: Char?) {
         if ( c == null ){
             supportFragmentManager.popBackStack()

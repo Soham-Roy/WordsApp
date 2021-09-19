@@ -26,6 +26,7 @@ class LettersFragment : Fragment(), ItemClickListener {
 
     private lateinit var listener: FragmentListener
 
+    // Function to throw error if the host activity is not implementing the FragmentListener
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
