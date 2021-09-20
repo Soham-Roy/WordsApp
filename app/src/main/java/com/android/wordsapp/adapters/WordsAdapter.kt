@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.wordsapp.R
 import com.android.wordsapp.databinding.ListItemBinding
 
-class WordsAdapter(context: Context, private val c : Char, private val listener: ItemClickListener):
+class WordsAdapter(context: Context, private val c : String, private val listener: ItemClickListener):
     RecyclerView.Adapter<WordsAdapter.WordViewHolder>() {
 
     inner class WordViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)

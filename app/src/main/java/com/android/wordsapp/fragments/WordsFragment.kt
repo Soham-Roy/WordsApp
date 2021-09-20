@@ -24,7 +24,15 @@ class WordsFragment : Fragment(), ItemClickListener {
     private lateinit var adapter: WordsAdapter
     private var toast: Toast? = null
 
-    var charReceived: Char? = null
+    private lateinit var letter: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        arguments?.let {
+            letter = it.getString("letter").toString()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +43,7 @@ class WordsFragment : Fragment(), ItemClickListener {
         return bind.root
     }
 
+/*
     private lateinit var listener: FragmentListener
 
     // Function to throw error if the host activity is not implementing the FragmentListener
@@ -47,16 +56,20 @@ class WordsFragment : Fragment(), ItemClickListener {
             throw Exception("${context.toString()} must implement FragmentListener")
         }
     }
+ */
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+/*
         bind.wordToolbar.navigationIcon = context?.getDrawable(R.drawable.ic_baseline_arrow_back_24)
         bind.wordToolbar.setNavigationOnClickListener {
             listener.onItemClicked(null)
         }
-        updateUI(charReceived!!)
+ */
+        updateUI(letter)
     }
 
-    private fun updateUI(c: Char){
+    private fun updateUI(c: String){
         adapter = WordsAdapter(requireContext(), c, this)
         bind.wordRecyclerView.adapter = adapter
         bind.wordRecyclerView.hasFixedSize()
@@ -69,14 +82,8 @@ class WordsFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemClicked(position: Int) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("${SEARCH_URL}${adapter.getWord(position)}+meaning"))
-        if ( activity?.packageManager?.resolveActivity(intent, 0) != null ) {
-            startActivity(intent)
-        }
-        else {
-            if ( toast != null ) toast!!.cancel()
-            toast = Toast.makeText(context, "Item ${adapter.getWord(position)} and no intent", Toast.LENGTH_SHORT)
-            toast!!.show()
-        }
+        val queryUrl: Uri = Uri.parse("${SEARCH_URL}${adapter.getWord(position)}+meaning")
+        val intent = Intent(Intent.ACTION_VIEW, queryUrl)
+        context?.startActivity(intent)
     }
 }

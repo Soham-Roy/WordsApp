@@ -6,10 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?colorPrimary"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white"/>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_activity_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.android.wordsapp.fragments.LettersFragment"/>
+        android:layout_height="0dp"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:layout_constraintTop_toBottomOf="@id/main_activity_toolbar"
+        app:navGraph="@navigation/nav_graph"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

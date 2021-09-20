@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.wordsapp.R
@@ -24,6 +25,7 @@ class LettersFragment : Fragment(), ItemClickListener {
 
     private var toast: Toast? = null
 
+/*
     private lateinit var listener: FragmentListener
 
     // Function to throw error if the host activity is not implementing the FragmentListener
@@ -36,6 +38,7 @@ class LettersFragment : Fragment(), ItemClickListener {
             throw Exception("${context.toString()} must implement FragmentListener")
         }
     }
+ */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,8 +50,10 @@ class LettersFragment : Fragment(), ItemClickListener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        bind.toolbar.inflateMenu(R.menu.menu_item)
+        setHasOptionsMenu(true)
         updateUI()
+/*
+        bind.toolbar.inflateMenu(R.menu.menu_item)
         bind.toolbar.setOnMenuItemClickListener {
             when (it.itemId){
                 R.id.action_layout_button -> {
@@ -60,6 +65,7 @@ class LettersFragment : Fragment(), ItemClickListener {
                 else -> false
             }
         }
+ */
     }
 
     private fun setIcon(item: MenuItem){
@@ -95,6 +101,26 @@ class LettersFragment : Fragment(), ItemClickListener {
         toast = Toast.makeText(context, "Item $thisChar clicked", Toast.LENGTH_SHORT)
         toast!!.show()
 
-        listener.onItemClicked(thisChar)
+        val action = LettersFragmentDirections.actionLettersFragmentToWordsFragment(thisChar.toString())
+        this.findNavController().navigate(action)
+
+//        listener.onItemClicked(thisChar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_item, menu)
+        setIcon(menu.findItem(R.id.action_layout_button))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_layout_button -> {
+                isLinearLayout = !isLinearLayout
+                updateUI()
+                setIcon(item)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
